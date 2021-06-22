@@ -1,6 +1,6 @@
 # dwm-bar
 personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
-## table of contents
+## table-of-contents
 - [current functions](#current-functions)
   - [dwm_playerctl](#dwm_playerctl)
   - [dwm_resources](#dwm_resources)
@@ -9,6 +9,7 @@ personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modul
 - [usage](#usage)
 - [customisation](#customizing)
 - [acknowledgements](#acknowledgements)
+##current-functions
 ### dwm_track
 displays what is now playing using playerctl metadata
 ```
