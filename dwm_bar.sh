@@ -1,94 +1,63 @@
 #!/bin/sh
 
-# A modular status bar for dwm
-# Joe Standring <git@joestandring.com>
+# heavily personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
+# Theo Krueger <git@github.com/theokrueger>
 # GNU GPLv3
+# dependencies: xorg-xsetroot playerctl
 
-# Dependencies: xorg-xsetroot
+# define our functions
 
-# Import functions with "$include /route/to/module"
-# It is recommended that you place functions in the subdirectory ./bar-functions and use: . "$DIR/bar-functions/dwm_example.sh"
-
-# Store the directory the script is running from
-LOC=$(readlink -f "$0")
-DIR=$(dirname "$LOC")
-
-# Change the appearance of the module identifier. if this is set to "unicode", then symbols will be used as identifiers instead of text. E.g. [📪 0] instead of [MAIL 0].
-# Requires a font with adequate unicode character support
-export IDENTIFIER="unicode"
-
-# Change the charachter(s) used to seperate modules. If two are used, they will be placed at the start and end.
-export SEP1="["
-export SEP2="]"
-
-# Import the modules
-. "$DIR/bar-functions/dwm_countdown.sh"
-. "$DIR/bar-functions/dwm_alarm.sh"
-. "$DIR/bar-functions/dwm_transmission.sh"
-. "$DIR/bar-functions/dwm_cmus.sh"
-. "$DIR/bar-functions/dwm_mpc.sh"
-. "$DIR/bar-functions/dwm_spotify.sh"
-. "$DIR/bar-functions/dwm_resources.sh"
-. "$DIR/bar-functions/dwm_battery.sh"
-. "$DIR/bar-functions/dwm_mail.sh"
-. "$DIR/bar-functions/dwm_backlight.sh"
-. "$DIR/bar-functions/dwm_alsa.sh"
-. "$DIR/bar-functions/dwm_pulse.sh"
-. "$DIR/bar-functions/dwm_weather.sh"
-. "$DIR/bar-functions/dwm_vpn.sh"
-. "$DIR/bar-functions/dwm_networkmanager.sh"
-. "$DIR/bar-functions/dwm_keyboard.sh"
-. "$DIR/bar-functions/dwm_ccurse.sh"
-. "$DIR/bar-functions/dwm_date.sh"
-. "$DIR/bar-functions/dwm_connman.sh"
-. "$DIR/bar-functions/dwm_loadavg.sh"
-. "$DIR/bar-functions/dwm_currency.sh"
-
-parallelize() {
-    while true
-    do
-        printf "Running parallel processes\n"
-        dwm_weather &
-        dwm_networkmanager &
-        sleep 5
-    done
+#dwm_track: a dwm_bar function to display now playing track
+dwm_track () { # depends on playerctl
+    # prints now playing track:
+    # <status>: <track title> <positon>/<length>
+    # for example:
+    # Playing: Touhiron 3:42/4:35
+    # IMPORTANT NOTE, since this can return nothing we add the separation between modules in this function instead of the concatenation during xsetroot
+    track=$(playerctl metadata title -s)
+    if ! [ ${#track} = "0" ]; then
+        printf "$(playerctl status): $track $(dwm_track_time) | "
+    fi
 }
-parallelize &
+dwm_track_time () { # helper function for dwm_track to format time
+    pos=$(playerctl position | sed 's/..\{6\}$//')
+    len=$(playerctl metadata mpris:length | sed 's/.\{6\}$//')
+    # format time as minute:second if minute will not be zero 
+    if ! [ $((pos / 60)) = 0 ]; then
+        printf "%i:" $((pos / 60))
+    fi
+    printf "%02d/" $((pos % 60))
+    if ! [ $((len / 60)) = 0 ]; then
+        printf "%i:" $((len / 60))
+    fi
+    printf "%02d" $((len % 60))
+    # this technically breaks at things less than 10 seconds by displaying a padded zero when it shouldnt but thats hoesntly not worth implementing a fix for
+    # also breaks with tracks > 1 hour, easy enough to fix im just lazy
+}
 
-# Update dwm status bar every second
+# dwm_memory: a dwm_bar function to display used memory
+dwm_memory () {
+    # prints memory usage in format:
+    # mem: <usedmem>Gi
+    # for example:
+    # mem: 6.9Gi
+	printf "mem: %s" "$(free -h | grep Mem | awk '{print $3}')"
+}
+
+# dwm_date: a dwm_bar function to display current time
+dwm_date () { 
+    # prints date in format:
+    # [<weekday>] <fullyear>-<month>-<day> <time>
+    # for example:
+    # [4] 1970-01-01 00:00
+    printf "$(date "+[%u] %F %R")"
+}
+
+# update loop
 while true
 do
-    # Append results of each func one by one to the upperbar string
-    upperbar=""
-    upperbar="$upperbar$(dwm_connman)"
-    upperbar="$upperbar$(dwm_countdown)"
-    upperbar="$upperbar$(dwm_alarm)"
-    upperbar="$upperbar$(dwm_transmission)"
-    upperbar="$upperbar$(dwm_cmus)"
-    upperbar="$upperbar$(dwm_mpc)"
-    upperbar="$upperbar$(dwm_spotify)"
-    upperbar="$upperbar$(dwm_resources)"
-    upperbar="$upperbar$(dwm_battery)"
-    upperbar="$upperbar$(dwm_mail)"
-    upperbar="$upperbar$(dwm_backlight)"
-    upperbar="$upperbar$(dwm_alsa)"
-    upperbar="$upperbar$(dwm_pulse)"
-    upperbar="$upperbar${__DWM_BAR_WEATHER__}"
-    upperbar="$upperbar$(dwm_vpn)"
-    upperbar="$upperbar${__DWM_BAR_NETWORKMANAGER__}"
-    upperbar="$upperbar$(dwm_keyboard)"
-    upperbar="$upperbar$(dwm_ccurse)"
-    upperbar="$upperbar$(dwm_date)"
-    upperbar="$upperbar$(dwm_loadavg)"
-    upperbar="$upperbar$(dwm_currency)"
-   
-    # Append results of each func one by one to the lowerbar string
-    lowerbar=""
-
-    
-    xsetroot -name "$upperbar"
-    
-    # Uncomment the line below to enable the lowerbar 
-#    xsetroot -name "$upperbar;$lowerbar"
+    # set name to our new info and do it again 1 second later
+    xsetroot -name "$(dwm_track)$(dwm_memory) | $(dwm_date)"
+    # IMPORTANT NOTE, since dwm_track can return nothing we add the separation in its function, if you change order of things please modify dwm_track accordingly
     sleep 1
 done
