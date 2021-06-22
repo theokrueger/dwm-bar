@@ -1,6 +1,6 @@
 # dwm-bar
 personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
-## table-of-contents
+## directory
 - [current functions](#current-functions)
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)

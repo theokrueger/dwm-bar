@@ -14,14 +14,14 @@ dwm_track () { # depends on playerctl
     # for example:
     # Playing: Touhiron 3:42/4:35
     # IMPORTANT NOTE, since this can return nothing we add the separation between modules in this function instead of the concatenation during xsetroot
-    track=$(playerctl metadata title -s)
-    if ! [ ${#track} = "0" ]; then
-        printf "$(playerctl status): $track $(dwm_track_time) | "
+    status=$(playerctl status -s)
+    if [ $status = "Playing" ]; then
+        printf "$status: $(playerctl metadata title -s) $(dwm_track_time) | "
     fi
 }
 dwm_track_time () { # helper function for dwm_track to format time
-    pos=$(playerctl position | sed 's/..\{6\}$//')
-    len=$(playerctl metadata mpris:length | sed 's/.\{6\}$//')
+    pos=$(playerctl position -s | sed 's/..\{6\}$//')
+    len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
     # format time as minute:second if minute will not be zero 
     if ! [ $((pos / 60)) = 0 ]; then
         printf "%i:" $((pos / 60))
