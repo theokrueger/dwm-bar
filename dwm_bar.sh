@@ -9,7 +9,7 @@
 
 #dwm_track: a dwm_bar function to display now playing track
 dwm_track () { # depends on playerctl
-    # prints now playing track:
+    # prints now playing track in format:
     # <status>: <track title> <positon>/<length>
     # for example:
     # Playing: Touhiron 3:42/4:35

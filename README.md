@@ -13,27 +13,33 @@ personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modul
 ## current-functions
 ### dwm_track
 displays what is now playing using playerctl metadata
+format:
 ```
-prints now playing track:
 <status>: <track title> <positon>/<length>
-for example:
+```
+display:
+```
 Playing: Touhiron 3:42/4:35
 ```
-dependencies: ```playerctl```
+dependencies: `playerctl`
 ### dwm_memory
 displays used memory
-```
 format:
+```
 mem: <usedmem>Gi
+```
 display:
+```
 mem: 6.9Gi
 ```
 ### dwm_date
 displays current date and time
-```
 format:
+```
 [<weekday>] <fullyear>-<month>-<day> <time>
+```
 display:
+```
 [4] 1970-01-01 00:00
 ```
 ## installation
@@ -44,7 +50,7 @@ $ cd dwm-bar
 ```
 2. install dependencies
 ```
-sudo pacman -S xorg-xsetroot playerctl
+$ sudo pacman -S xorg-xsetroot playerctl
 ```
 3. make the script executable
 ```
