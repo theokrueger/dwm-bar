@@ -2,8 +2,8 @@
 personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
 ## table-of-contents
 - [current functions](#current-functions)
-  - [dwm_playerctl](#dwm_playerctl)
-  - [dwm_resources](#dwm_resources)
+  - [dwm_track](#dwm_track)
+  - [dwm_memory](#dwm_memory)
   - [dwm_date](#dwm_date)
 - [installation](#installation)
 - [usage](#usage)
@@ -20,7 +20,7 @@ for example:
 Playing: Touhiron 3:42/4:35
 ```
 dependencies: ```playerctl```
-### dwm_resources
+### dwm_memory
 displays used memory
 ```
 format:
