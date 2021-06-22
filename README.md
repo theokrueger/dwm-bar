@@ -9,7 +9,8 @@ personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modul
 - [usage](#usage)
 - [customisation](#customizing)
 - [acknowledgements](#acknowledgements)
-##current-functions
+
+## current-functions
 ### dwm_track
 displays what is now playing using playerctl metadata
 ```
