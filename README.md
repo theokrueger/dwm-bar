@@ -7,7 +7,7 @@ personalised fork of [dwm-bar](https://github.com/joestandring/dwm-bar), a modul
   - [dwm_date](#dwm_date)
 - [installation](#installation)
 - [usage](#usage)
-- [customisation](#customizing)
+- [customisation](#customisation)
 - [acknowledgements](#acknowledgements)
 
 ## current-functions
