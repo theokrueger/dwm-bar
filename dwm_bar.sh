@@ -16,23 +16,10 @@ dwm_track () { # depends on playerctl
     # IMPORTANT NOTE, since this can return nothing we add the separation between modules in this function instead of the concatenation during xsetroot
     status=$(playerctl status -s)
     if [ $status = "Playing" ]; then
-        printf "$status: $(playerctl metadata title -s) $(dwm_track_time) | "
+        pos=$(playerctl position -s | sed 's/..\{6\}$//')
+        len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
+        printf "$status: $(playerctl metadata title -s) %02d:%02d/%02d:%02d | " $((pos / 60)) $((pos % 60)) $((len / 60)) $((len % 60))
     fi
-}
-dwm_track_time () { # helper function for dwm_track to format time
-    pos=$(playerctl position -s | sed 's/..\{6\}$//')
-    len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
-    # format time as minute:second if minute will not be zero 
-    if ! [ $((pos / 60)) = 0 ]; then
-        printf "%i:" $((pos / 60))
-    fi
-    printf "%02d/" $((pos % 60))
-    if ! [ $((len / 60)) = 0 ]; then
-        printf "%i:" $((len / 60))
-    fi
-    printf "%02d" $((len % 60))
-    # this technically breaks at things less than 10 seconds by displaying a padded zero when it shouldnt but thats hoesntly not worth implementing a fix for
-    # also breaks with tracks > 1 hour, easy enough to fix im just lazy
 }
 
 # dwm_memory: a dwm_bar function to display used memory
