@@ -16,7 +16,7 @@ dwm_track() { # depends on playerctl
     # Playing: Touhiron 03:42/04:35
     # IMPORTANT NOTE, since this can return nothing we add the separation between modules in this function instead of the concatenation during xsetroot
     status=$(playerctl status -s)
-    if [ $status = "Playing" ]; then
+    if [ $status = "Playing" 2> /dev/null ]; then # if playerctl cannot hook into anything then it throws errors so we just throw stderr into the void
         pos=$(playerctl position -s | sed 's/..\{6\}$//')
         len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
         # dumb print setup because i do not care
@@ -36,7 +36,7 @@ dwm_memory() {
 # dwm_storage: a dwm_bar function to display used storage
 # IMPORTANT: cycles through all storages mounted before execution of this script ONLY
 dwm_storage_drives="$(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6-)"
-dwm_storage_len="$(( $(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{print length, $0}' | sort -nr | head -n 1 | cut -c1-1) + 5 ))" # TODO please fix thanks
+dwm_storage_len="$(( $(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{print length, $0}' | sort -nr | head -n 1 | cut -c1-1)))" # TODO please fix thanks
 dwm_storage_nod="$(echo $dwm_storage_drives | wc -w)"
 dwm_storage_drives=($dwm_storage_drives)
 # here is the entire process so i can actually understand what i wrote:
@@ -47,19 +47,17 @@ dwm_storage_drives=($dwm_storage_drives)
     # when dwm_storage is called, we extract the drive we want to print the info of based off which cycle we are on.
         # this is done by using the array of all drives, getting what drive we should be at by modding cycles by 3*nod then dividing out 3
         # this makes the same drive stay for 3 cycles
-    # then we add the % storage use with df <drive>, taking out the % to make <10% use still 2 digits long and readding it
     # we then calculate the number of spaces so that we do not disturb the positions of everything else on the bar every 3 cycles.
-        # take the longest name and add 4 to it to get the longest possible length (<name><space><xx%> = +4)
         # take the maximum length minus current length of storage and printf that many spaces
-    # finally we print in format "<spacing><disk> <percent used>"
+    # then we add the % storage use with df <drive>, taking out the % to make <10% use still 2 digits long and readding it
+    # finally we print in format "<disk><spacing><percent used>"
 dwm_storage() {
     # cycles printing all storage drives and their % usage in format:
-    # <spacing><disk> <percent used>
+    # <disk><spacing><percent used>
     # for example:
     # sda 42%
     temp="$(echo ${dwm_storage_drives[$(( $dwm_bar_loops % ($dwm_storage_nod * 3) / 3 ))]})"
-    temp="$(echo $temp) $(printf "%02d" "$(df -h /dev/$(echo $temp) | tail -1 | awk '{print $5}' | sed 's/.$//' )")%"
-    echo "sto:$(printf "%*s" $(($dwm_storage_len - ${#temp})))$temp"
+    echo "$temp$(printf "%*s" $(($dwm_storage_len - ${#temp}))) $(printf "%02d" "$(df -h /dev/$(echo $temp) | tail -1 | awk '{print $5}' | sed 's/.$//' )")%"
 }
 
 # dwm_date: a dwm_bar function to display current time
