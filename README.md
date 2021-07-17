@@ -1,5 +1,5 @@
 # dwm-bar
-complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
+complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dwm-bar), a now unmodular statusbar for dwm
 ## directory
 - [current-functions](#current-functions)
   - [dwm_track](#dwm_track)
