@@ -20,7 +20,7 @@ dwm_track() { # depends on playerctl
         pos=$(playerctl position -s | sed 's/..\{6\}$//')
         len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
         # dumb print setup because i do not care
-        printf "$status: $(playerctl metadata title -s) %02d:%02d/%02d:%02d | " $((pos / 60)) $((pos % 60)) $((len / 60)) $((len % 60))
+        printf "$(playerctl metadata title -s) %02d:%02d/%02d:%02d | " $((pos / 60)) $((pos % 60)) $((len / 60)) $((len % 60))
     fi
 }
 
