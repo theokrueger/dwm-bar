@@ -103,7 +103,7 @@ dwm_date() {
 while true; do
     # set name to our new info and do it again 1 second(s) later
     # IMPORTANT NOTE, since dwm_track can return nothing we add the separation in its function, if you change order of things please modify dwm_track accordingly
-    xsetroot -name "$(dwm_track)$(dwm_memory) | $(dwm_storage) | $(dwm_battery) | $(dwm_date)"
+    xsetroot -name "$(dwm_track)$(dwm_memory) | $(dwm_storage) | $(dwm_battery) | $(dwm_brightness) | $(dwm_date)"
     # increment our number of loops
     dwm_bar_loops=$(($dwm_bar_loops + 1))
     sleep 1 # change this to be minimum update rate
