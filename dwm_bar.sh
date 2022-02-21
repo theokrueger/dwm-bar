@@ -3,7 +3,7 @@
 # complete rewrite of [dwm-bar](https://github.com/joestandring/dwm-bar), a modular statusbar for dwm
 # Theo Krueger <git@github.com/theokrueger>
 # GNU GPLv3
-# dependencies: xorg-xsetroot playerctl
+# dependencies: xorg-xsetroot playerctl brightnessctl
 
 # add a loop number variable so we can loop through some things nicely
 dwm_bar_loops=0
@@ -32,6 +32,7 @@ dwm_memory() {
     # for example:
     # mem: 6.9Gi
 
+    # IMPORTANT NOTE: you can add another argument to 'free' like '--giga' or '--peta' to change scale of the number, read free(1) manpage.
     printf "mem: %s" "$(free -h | grep Mem | awk '{print $3}')"
 }
 
@@ -71,8 +72,20 @@ dwm_battery() {
     # <status>: <charge>%
     # for example:
     # Discharging: 69%
-    # i <3 iso-8601
+
+    # IMPORTANT NOTE: sometimes battery status might be 'UNKNOWN', and that is okay!
     echo "$(cat /sys/class/power_supply/BAT0/status): $(cat /sys/class/power_supply/BAT0/capacity)%"
+}
+
+# dwm_brightness: a dwm_bar function to display current brightness1
+dwm_brightness() { # depends on brightnessctl
+    # prints brightness in format:
+    # BL: <brightness>%
+    # for example:
+    # BL: 69%
+
+    # IMPORTANT NOTE: requires brightnessctl
+    echo "BL: $(($(brightnessctl get) * 100 / $(brightnessctl max)))%"
 }
 
 # dwm_date: a dwm_bar function to display current time
@@ -81,6 +94,8 @@ dwm_date() {
     # [<weekday>] <fullyear>-<month>-<day> <time>
     # for example:
     # [4] 1970-01-01 00:00
+
+    # IMPORTANT NOTE: i love iso-8601
     echo "$(date "+[%u] %F %R")"
 }
 
@@ -93,4 +108,3 @@ while true; do
     dwm_bar_loops=$(($dwm_bar_loops + 1))
     sleep 1 # change this to be minimum update rate
 done
-
