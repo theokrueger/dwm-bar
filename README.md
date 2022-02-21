@@ -48,6 +48,28 @@ display:
 ```
 sda 42%
 ```
+### dwm_battery
+displays current battery status and charge %
+
+format
+```
+<status>: <percentage>%
+```
+display:
+```
+Charging: 69%
+```
+### dwm_brighness
+displays current screen brightness (for laptops mostly)
+
+format
+```
+BL: <brightness>%
+```
+display:
+```
+BL: 13%
+```
 ### dwm_date
 displays current date and time
 
@@ -59,6 +81,7 @@ display:
 ```
 [4] 1970-01-01 00:00
 ```
+
 ## installation
 1. clone and enter the repository:
 ```
@@ -66,9 +89,16 @@ $ git clone https://github.com/theokrueger/dwm-bar
 $ cd dwm-bar
 ```
 2. install dependencies
+archlinux
 ```
-$ sudo pacman -S xorg-xsetroot playerctl
+$ pacman -S xorg-xsetroot playerctl brighnessctl
 ```
+gentoo
+```
+$ emerge -a x11-apps/xsetroot media-sound/playerctl app-misc/brightnessctl
+```
+brightnessctl can be found in the [guru](https://wiki.gentoo.org/wiki/Project:GURU) overlay
+
 3. make the script executable
 ```
 $ chmod +x dwm_bar.sh
