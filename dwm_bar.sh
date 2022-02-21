@@ -20,7 +20,7 @@ dwm_track() { # depends on playerctl
         pos=$(playerctl position -s | sed 's/..\{6\}$//')
         len=$(playerctl metadata mpris:length -s | sed 's/.\{6\}$//')
         # dumb print setup because i do not care
-        printf "$(playerctl metadata title -s) %02d:%02d/%02d:%02d | " $((pos / 60)) $((pos % 60)) $((len / 60)) $((len % 60))
+        printf "$status: $(playerctl metadata title -s) %02d:%02d/%02d:%02d | " $((pos / 60)) $((pos % 60)) $((len / 60)) $((len % 60))
     fi
 }
 
@@ -36,7 +36,7 @@ dwm_memory() {
 # dwm_storage: a dwm_bar function to display used storage
 # IMPORTANT: cycles through all storages mounted before execution of this script ONLY
 dwm_storage_drives="$(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6-)"
-dwm_storage_len="$(( $(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{print length, $0}' | sort -nr | head -n 1 | cut -c1-1)))" # TODO please fix thanks
+dwm_storage_len="$(($(df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{print length, $0}' | sort -nr | head -n 1 | awk '{print $1;}')))"
 dwm_storage_nod="$(echo $dwm_storage_drives | wc -w)"
 dwm_storage_drives=($dwm_storage_drives)
 # here is the entire process so i can actually understand what i wrote:
