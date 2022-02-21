@@ -5,6 +5,8 @@ complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dw
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)
   - [dwm_storage](#dwm_storage)
+  - [dwm_battery](#dwm_battery)
+  - [dwm_brightness](#dwm_brightness)
   - [dwm_date](#dwm_date)
 - [installation](#installation)
 - [usage](#usage)
@@ -59,7 +61,7 @@ display:
 ```
 Charging: 69%
 ```
-### dwm_brighness
+### dwm_brightness
 displays current screen brightness (for laptops mostly)
 
 format
