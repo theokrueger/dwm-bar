@@ -84,8 +84,12 @@ dwm_brightness() { # depends on brightnessctl
     # for example:
     # BL: 69%
 
-    # IMPORTANT NOTE: requires brightnessctl
-    echo "BL: $(($(brightnessctl get) * 100 / $(brightnessctl max)))%"
+    # IMPORTANT NOTE: requires brightnessctl, percentage will always be so that output does not differ in width (05% instead of 5%, MAX instead of 100%)
+    brightness=$( printf "%02d%%" "$(( $(brightnessctl get) * 100 / $(brightnessctl max) ))" )
+    if [ brightness = "100%" ]; then
+        brightness="MAX"
+    fi
+    echo "BL: $brightness"
 }
 
 # dwm_date: a dwm_bar function to display current time
