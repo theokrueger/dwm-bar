@@ -4,6 +4,7 @@ complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dw
 
 ## directory
 
+- [goals](#goals)
 - [current-functions](#current-functions)
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)
@@ -16,6 +17,19 @@ complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dw
 - [customisation](#customisation)
 - [contribution](#contribution)
 - [acknowledgements](#acknowledgements)
+
+## goals
+
+- show status of various functions 
+  - fixed width
+    - except for media player
+    - ...and battery charge
+  - plaintext
+  - actually useful information
+- remove inefficiencies from original project
+- compatibility with *my* setup
+- be minimalistic and boring
+- ignore as many edge cases as possible
 
 ## current-functions
 
@@ -57,7 +71,7 @@ this module tries to keep using the same amount of space on the bar so it does n
 
 format:
 ```
-<spacing><disk> <percent used>
+<disk><spacing><percent used>
 ```
 
 display:
