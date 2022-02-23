@@ -1,7 +1,9 @@
 # dwm-bar
+
 complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dwm-bar), a now unmodular statusbar for dwm
 
 ## directory
+
 - [current-functions](#current-functions)
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)
@@ -18,6 +20,7 @@ complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dw
 ## current-functions
 
 ### dwm_track
+
 displays what is now playing using playerctl metadata
 
 format:
@@ -29,9 +32,11 @@ display:
 ```
 Playing: Touhiron 03:42/04:35
 ```
+
 dependencies: `playerctl`
 
 ### dwm_memory
+
 displays used memory
 
 format:
@@ -45,6 +50,7 @@ mem: 6.9Gi
 ```
 
 ### dwm_storage
+
 cycles printing all storage drives and their % usage
 
 this module tries to keep using the same amount of space on the bar so it does not distrub other modules
@@ -73,6 +79,7 @@ Charging: 69%
 ```
 
 ### dwm_brightness
+
 displays current screen brightness (for laptops mostly)
 
 format
@@ -85,7 +92,10 @@ display:
 BL: 13%
 ```
 
+dependencies: `brightnessctl`
+
 ### dwm_date
+
 displays current date and time
 
 format:
@@ -99,6 +109,7 @@ display:
 ```
 
 ## installation
+
 1. clone and enter the repository:
 
 ```
@@ -117,6 +128,7 @@ gentoo
 ```
 $ emerge -a x11-apps/xsetroot media-sound/playerctl app-misc/brightnessctl
 ```
+
 brightnessctl can be found in the [guru](https://wiki.gentoo.org/wiki/Project:GURU) overlay
 
 3. make the script executable
@@ -124,22 +136,32 @@ brightnessctl can be found in the [guru](https://wiki.gentoo.org/wiki/Project:GU
 ```
 $ chmod +x dwm_bar.sh
 ```
+
 ## usage
+
 simply run the script and dwm should display your bar:
+
 ```
 $ ./dwm_bar.sh
 ```
+
 if you would like your bar to be displayed when x starts, add it to your `.xinitrc` before launching dwm
+
 ## customisation
+
 my personalisation of dwm_bar includes stripping it of its modularity in favour of simplicity. creating many modules may cause headache, but i prefer it this way.
 
 you define functions in `dwm_bar.sh` and add them to the `xsetroot` loop with manual spacing and order.
+
 ## contribution
+
 contributing to this is a simple 3-step process:
 * use echo instead of printf wherever possible
 * no capitalisation
 * constantly question why you made this when dwm-bar is outright better and easier to modify
+
 ## acknowledgements
+
 * [Klemens Nanni](https://notabug.org/kl3)
 * [@boylemic](https://github.com/boylemic/configs/blob/master/dwm_status)
 * [Parket Johnson](https://github.com/ronno/scripts/blob/master/xsetcmus)
