@@ -1,17 +1,22 @@
 # dwm-bar
 complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dwm-bar), a now unmodular statusbar for dwm
+
 ## directory
 - [current-functions](#current-functions)
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)
   - [dwm_storage](#dwm_storage)
+  - [dwm_battery](#dwm_battery)
+  - [dwm_brightness](#dwm_brightness)
   - [dwm_date](#dwm_date)
 - [installation](#installation)
 - [usage](#usage)
 - [customisation](#customisation)
 - [contribution](#contribution)
 - [acknowledgements](#acknowledgements)
+
 ## current-functions
+
 ### dwm_track
 displays what is now playing using playerctl metadata
 
@@ -19,11 +24,13 @@ format:
 ```
 <status>: <track title> <positon>/<length>
 ```
+
 display:
 ```
 Playing: Touhiron 03:42/04:35
 ```
 dependencies: `playerctl`
+
 ### dwm_memory
 displays used memory
 
@@ -31,10 +38,12 @@ format:
 ```
 mem: <usedmem><unit of storage>
 ```
+
 display:
 ```
 mem: 6.9Gi
 ```
+
 ### dwm_storage
 cycles printing all storage drives and their % usage
 
@@ -44,10 +53,12 @@ format:
 ```
 <spacing><disk> <percent used>
 ```
+
 display:
 ```
 sda 42%
 ```
+
 ### dwm_battery
 displays current battery status and charge %
 
@@ -55,21 +66,25 @@ format
 ```
 <status>: <percentage>%
 ```
+
 display:
 ```
 Charging: 69%
 ```
-### dwm_brighness
+
+### dwm_brightness
 displays current screen brightness (for laptops mostly)
 
 format
 ```
 BL: <brightness>%
 ```
+
 display:
 ```
 BL: 13%
 ```
+
 ### dwm_date
 displays current date and time
 
@@ -77,6 +92,7 @@ format:
 ```
 [<weekday>] <fullyear>-<month>-<day> <time>
 ```
+
 display:
 ```
 [4] 1970-01-01 00:00
@@ -84,15 +100,19 @@ display:
 
 ## installation
 1. clone and enter the repository:
+
 ```
 $ git clone https://github.com/theokrueger/dwm-bar
 $ cd dwm-bar
 ```
+
 2. install dependencies
+
 archlinux
 ```
 $ pacman -S xorg-xsetroot playerctl brighnessctl
 ```
+
 gentoo
 ```
 $ emerge -a x11-apps/xsetroot media-sound/playerctl app-misc/brightnessctl
@@ -100,6 +120,7 @@ $ emerge -a x11-apps/xsetroot media-sound/playerctl app-misc/brightnessctl
 brightnessctl can be found in the [guru](https://wiki.gentoo.org/wiki/Project:GURU) overlay
 
 3. make the script executable
+
 ```
 $ chmod +x dwm_bar.sh
 ```
