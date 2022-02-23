@@ -20,7 +20,6 @@ dwm_track() { # depends on playerctl
     if [ $status = "Playing" 2> /dev/null ]; then # if playerctl cannot hook into anything then it throws errors so we just throw stderr into the void
         pos=$( playerctl position -s | sed 's/..\{6\}$//' )
         len=$( playerctl metadata mpris:length -s | sed 's/.\{6\}$//' )
-        # dumb print setup because i do not care
         printf "$status: $( playerctl metadata title -s ) %02d:%02d/%02d:%02d | " $(( pos / 60 )) $(( pos % 60 )) $(( len / 60 )) $(( len % 60 ))
     fi
 }
@@ -33,7 +32,7 @@ dwm_memory() {
     # mem: 6.9Gi
 
     # IMPORTANT NOTE: you can add another argument to 'free' like '--giga' or '--peta' to change scale of the number, read free(1) manpage.
-    printf "mem: %s" "$( free -h | grep Mem | awk '{print $3}' )"
+    printf "mem: %s" "$( free -h | grep Mem | awk '{ print $3 }' )"
 }
 
 # dwm_storage: a dwm_bar function to display used storage
@@ -52,7 +51,7 @@ dwm_memory() {
 #     finally we print in format "<disk><spacing><percent used>"
 # IMPORTANT: cycles through all storages mounted before execution of this script ONLY
 dwm_storage_drives="$( df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- )"
-dwm_storage_len="$(( $( df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{print length, $0}' | sort -nr | head -n 1 | awk '{print $1;}' ) ))"
+dwm_storage_len="$(( $( df -h | awk '{ print $1 }' | grep /dev/ | cut -c 6- | awk '{ print length, $0 }' | sort -nr | head -n 1 | awk '{ print $1; }' ) ))"
 dwm_storage_nod="$( echo $dwm_storage_drives | wc -w )"
 dwm_storage_drives=( $dwm_storage_drives )
 dwm_storage() {
@@ -62,8 +61,8 @@ dwm_storage() {
     # sda 42%
 
     # IMPORTANT NOTE: spacing will always be so that output does not differ in width
-    temp="$( echo ${dwm_storage_drives[$(( $dwm_bar_loops % ($dwm_storage_nod * 3) / 3 ))]})"
-    echo "$temp$( printf "%*s" $(( $dwm_storage_len - ${#temp} )) ) $( printf "%02d" "$( df -h /dev/$( echo $temp ) | tail -1 | awk '{ print $5 }' | sed 's/.$//' )" )%"
+    drive="$( echo ${dwm_storage_drives[ $(( $dwm_bar_loops % ( $dwm_storage_nod * 3 ) / 3 )) ]} )"
+    echo "$drive$( printf "%*s" $(( $dwm_storage_len - ${#drive} )) ) $( printf "%02d" "$( df -h /dev/$( echo $drive ) | tail -1 | awk '{ print $5 }' | sed 's/.$//' )" )%"
 }
 
 # dwm_battery: a dwm_bar funcion to display current battery percentage and state
