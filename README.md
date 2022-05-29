@@ -2,10 +2,12 @@
 
 complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dwm-bar), a now unmodular statusbar for dwm
 
+at this point its so far detatched its hardly even a fork of the original, you should use the original anyways.
+
 ## directory
 
 - [goals](#goals)
-- [current-functions](#current-functions)
+- [current-functions](#functions)
   - [dwm_track](#dwm_track)
   - [dwm_memory](#dwm_memory)
   - [dwm_storage](#dwm_storage)
@@ -23,33 +25,29 @@ complete rewrite (for the worse) of [dwm-bar](https://github.com/joestandring/dw
 - show status of various functions 
   - fixed width
     - except for media player
-    - ...and battery charge
-  - plaintext
   - actually useful information
-- remove inefficiencies from original project
-- compatibility with *my* setup
 - be minimalistic and boring
 - ignore as many edge cases as possible
 
-## current-functions
+## functions
 
-### dwm_track
+### `dwm_track`
 
 displays what is now playing using playerctl metadata
 
 format:
 ```
-<status>: <track title> <positon>/<length>
+<status>: <track title> <pos>/<len>
 ```
 
 display:
 ```
-Playing: Touhiron 03:42/04:35
+Playing: Touhiron 3:42/4:35
 ```
 
 dependencies: `playerctl`
 
-### dwm_memory
+### `dwm_memory`
 
 displays used memory
 
@@ -63,11 +61,9 @@ display:
 mem: 6.9Gi
 ```
 
-### dwm_storage
+### `dwm_drives`
 
 cycles printing all storage drives and their % usage
-
-this module tries to keep using the same amount of space on the bar so it does not distrub other modules
 
 format:
 ```
@@ -79,7 +75,8 @@ display:
 sda 42%
 ```
 
-### dwm_battery
+### `dwm_battery`
+
 displays current battery status and charge %
 
 format
@@ -92,9 +89,9 @@ display:
 Charging: 69%
 ```
 
-### dwm_brightness
+### `dwm_brightness`
 
-displays current screen brightness (for laptops mostly)
+displays current screen brightness (for laptops)
 
 format
 ```
@@ -108,7 +105,7 @@ BL: 13%
 
 dependencies: `brightnessctl`
 
-### dwm_date
+### `dwm_iso_time`
 
 displays current date and time
 
@@ -127,7 +124,7 @@ display:
 1. clone and enter the repository:
 
 ```
-$ git clone https://github.com/theokrueger/dwm-bar
+$ git clone https://gitlab.com/theokrueger/dwm-bar
 $ cd dwm-bar
 ```
 
@@ -145,10 +142,10 @@ $ emerge -a x11-apps/xsetroot media-sound/playerctl app-misc/brightnessctl
 
 brightnessctl can be found in the [guru](https://wiki.gentoo.org/wiki/Project:GURU) overlay
 
-3. make the script executable
+3. make the script and modules executable
 
 ```
-$ chmod +x dwm_bar.sh
+$ chmod +x dwm_bar.sh functions/*
 ```
 
 ## usage
@@ -163,16 +160,12 @@ if you would like your bar to be displayed when x starts, add it to your `.xinit
 
 ## customisation
 
-my personalisation of dwm_bar includes stripping it of its modularity in favour of simplicity. creating many modules may cause headache, but i prefer it this way.
-
-you define functions in `dwm_bar.sh` and add them to the `xsetroot` loop with manual spacing and order.
+look at the files and figure it out yourself
 
 ## contribution
 
-contributing to this is a simple 3-step process:
-* use echo instead of printf wherever possible
-* no capitalisation
-* constantly question why you made this when dwm-bar is outright better and easier to modify
+contributing to this is a simple 1-step process:
+* don't
 
 ## acknowledgements
 
