@@ -49,7 +49,7 @@ function update()
 
 # test laptop based on if theres a battery or not because i cant think of a better way
 IS_LAPTOP=false #cat /sys/class/power_supply/BAT0/status && true || false
-if [ $(cat /sys/class/power_supply/BAT0/status > /dev/null) ]; then
+if [ $(cat /sys/class/power_supply/BAT0/status 2> /dev/null) ]; then
         IS_LAPTOP=true
 fi
 
